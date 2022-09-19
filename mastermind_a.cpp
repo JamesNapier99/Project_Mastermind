@@ -92,27 +92,33 @@ void code::promptGuess()
     if (COUNT < 10)
     {
         COUNT += 1;
-        vector<int> guess = ;
+        vector<int> guess(LENGTH);
 
         //fills in guess with a total of LENGTH integers.
         for (int i = 0; i < LENGTH; i++)
         {
+            //prompt user for value at index i of guess.
             int temp;
-            cout << "Please enter guess #" << i+1;
+            cout << "Please enter index "<< i <<" of guess #" << COUNT;
             cin >> temp;
 
-            //checks whether or not the given guess is correct. if so, win condition.
-            if (checkCorrect(temp))
-            {
-                COUNT = 10;
-                cout << "You Win!";
-                return;
-            }
+            //push int to the back of guess vector.
+            guess.push_back(temp);
+        }
+
+        //checks whether or not the given guess is correct. if so, win condition.
+        if (checkCorrect(temp))
+        {
+            COUNT = 10;
+            cout << "You Win!";
+            return;
         }
     }
+    //the lose condition.
     cout << "You Lose!";
 }
 
+//prints the code.
 void code::print()
 {
     for (auto val = CODE.begin(); val != CODE.end(); ++val)
