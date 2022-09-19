@@ -42,7 +42,7 @@ void code::initializeCode()
 }
 
 //checks whether or not given code is correct.
-void code::checkCorrect (code& guess)
+bool code::checkCorrect (code& guess)
 {
     int numCorrect = 0;
     for (int i = 0; i < LENGTH; i++)
@@ -56,6 +56,12 @@ void code::checkCorrect (code& guess)
     cout << "Number of Correct Guesses in Correct Spaces: " << numCorrect;
     int numIncorrect = checkIncorrect(guess);
     cout << "Number of Correct Guesses in Incorrect Spaces: " << numIncorrect;
+
+    if (numCorrect == LENGTH)
+    {
+        return true;
+    }
+    return false;
 
 }
 
@@ -93,7 +99,12 @@ void code::promptGuess()
             int temp;
             cout << "Please enter guess #" << i+1;
             cin >> temp;
-
+            if (checkCorrect(temp))
+            {
+                COUNT == 10;
+                cout << "You Win!";
+                return;
+            }
         }
         
     }
