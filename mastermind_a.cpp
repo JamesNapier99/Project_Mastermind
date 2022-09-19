@@ -62,7 +62,6 @@ bool code::checkCorrect (code& guess)
         return true;
     }
     return false;
-
 }
 
 //rewrites the print function for the code class.
@@ -82,31 +81,34 @@ int code::checkIncorrect (code& guess)
                 break;
             }
         }
-        
     }
-    
     return numIncorrect;
 }
 
+//prompts user to enter a guess of the code.
 void code::promptGuess()
 {
+    //loops through code at most 10 times.
     if (COUNT < 10)
     {
         COUNT += 1;
         vector<int> guess = ;
+
+        //fills in guess with a total of LENGTH integers.
         for (int i = 0; i < LENGTH; i++)
         {
             int temp;
             cout << "Please enter guess #" << i+1;
             cin >> temp;
+
+            //checks whether or not the given guess is correct. if so, win condition.
             if (checkCorrect(temp))
             {
-                COUNT == 10;
+                COUNT = 10;
                 cout << "You Win!";
                 return;
             }
         }
-        
     }
     cout << "You Lose!";
 }
