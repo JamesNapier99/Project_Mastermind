@@ -1,7 +1,7 @@
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 // Project Mastermind: Part A
-// Written by [placeholder],[placeholder],[placeholder]
-///////////////////////////////////////////////////////
+// Written by James Napier, Julia Rasmussen, and Samuel Sheehan
+////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
@@ -21,6 +21,7 @@ public:
     void print();
 };
 
+//constructor for code class.
 code::code (int n, int m)
 {
     LENGTH = n;
@@ -29,6 +30,7 @@ code::code (int n, int m)
     COUNT = 0;
 }
 
+//initializes the random code to guess.
 void code::initializeCode()
 {
    for (int i = 0; i < LENGTH; i++)
@@ -39,6 +41,7 @@ void code::initializeCode()
     promptGuess();
 }
 
+//checks whether or not given code is correct.
 void code::checkCorrect (code& guess)
 {
     int numCorrect = 0;
@@ -56,6 +59,7 @@ void code::checkCorrect (code& guess)
 
 }
 
+//rewrites the print function for the code class.
 int code::checkIncorrect (code& guess)
 {
     int numIncorrect = 0;
@@ -102,6 +106,7 @@ void code::print()
         cout << ' ' << *val;
 }
 
+//the main function of the program.
 int main()
 {
     code temp(8, 10);
