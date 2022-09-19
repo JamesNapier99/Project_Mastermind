@@ -88,6 +88,7 @@ int code::checkIncorrect (code& guess)
     return numIncorrect;
 }
 
+//prompts user to 
 void code::promptGuess()
 {
     if (COUNT < 10)
@@ -101,7 +102,7 @@ void code::promptGuess()
             cin >> temp;
             if (checkCorrect(temp))
             {
-                COUNT == 10;
+                COUNT = 10;
                 cout << "You Win!";
                 return;
             }
