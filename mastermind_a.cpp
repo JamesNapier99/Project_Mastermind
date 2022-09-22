@@ -6,7 +6,9 @@
 #include <vector>
 #include <stdlib.h>
 #include <code.h>
+
 using namespace std;
+using namespace n;
 
 //constructor for code class.
 code::code (int n, int m)
