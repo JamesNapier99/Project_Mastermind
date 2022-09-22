@@ -34,10 +34,10 @@ void code::initializeCode()
 // initializes CODE, a random vector of size SIZE containing
 // integers between 0 and RANGE-1 for a code object
 {
-   for (int i = 0; i < LENGTH; i++)
-   {
+    for (int i = 0; i < LENGTH; i++)
+    {
         CODE[i] = rand() % RANGE;
-   }
+    }
 }
 
 int code::checkCorrect (code &guess)
@@ -56,7 +56,7 @@ int code::checkCorrect (code &guess)
 }
 
 //returns the # of digits in the incorrect position
-int code::checkIncorrect (code &guess)
+int code::checkIncorrect(code& guess)
 {
     int numIncorrect = 0;
     int count = LENGTH;
@@ -73,7 +73,7 @@ int code::checkIncorrect (code &guess)
 
     for (int i = 0; i < count; i++)
     {
-        for(int j = 0; j < count; j++)
+        for (int j = 0; j < count; j++)
         {
             if (guess.CODE[i] == temp[j])
             {
@@ -94,6 +94,11 @@ void code::promptGuess()
     {
         COUNT += 1;
         code guess(LENGTH, RANGE);
+
+        //print code
+        cout << "\nOur super secret code is ";
+        print();
+
         //fills in guess with a total of LENGTH integers.
         for (int i = 0; i < LENGTH; i++)
         {
@@ -105,19 +110,30 @@ void code::promptGuess()
             //push int to the back of guess vector.
             guess.CODE[i] = temp;
         }
-        cout << "\nNumber of correct digits: " << checkCorrect(guess);
-        cout << "\nNumber of digits in wrong place: " << checkIncorrect(guess);
+
+        int numCorrect = checkCorrect(guess);
+        int numIncorrect = checkIncorrect(guess);
+
+        cout << "\nNumber of correct digits: " << numCorrect;
+        cout << "\nNumber of digits in wrong place: " << numIncorrect;
 
         //checks whether or not the given guess is correct. if so, win condition.
-        if (checkCorrect(guess) == LENGTH)
+        if (numCorrect == LENGTH)
         {
             COUNT = 10;
-            cout << "\nYou Win!";
+            cout << "\nYou guessed the secret number! Congrats!";
+            cout << "\n================================================================================";
             return;
+        }
+        else
+        {
+            cout << "\nYour guess was not correct. You have " << 10 - COUNT << " guesses left!";
+            cout << "\n================================================================================";
         }
     }
     //the lose condition.
-    cout << "\nYou Lose!\n";
+    cout << "\nSorry, you ran out of guesses. Try again next time!";
+    cout << "\n================================================================================";
 }
 
 //prints the code.
@@ -133,13 +149,13 @@ void code::print()
 int main()
 {
     int len, ran;
+    cout << "================================================================================";
     cout << "\nPlease enter the length of the guess you want to play with: ";
     cin >> len;
-    cout << "\nPlease enter the range of numbers you want to play with: ";
+    cout << "Please enter the range of numbers you want to play with: ";
     cin >> ran;
+    cout << "================================================================================";
     code master(len, ran);
     master.initializeCode();
-    master.print();
     master.promptGuess();
-    master.print();
 }
