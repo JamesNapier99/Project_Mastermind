@@ -5,21 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
+#include <code.h>
 using namespace std;
-
-class code
-{
-private:
-    int checkIncorrect(code &guess);
-    int checkCorrect(code &guess);
-    int RANGE, LENGTH, COUNT;
-public:
-    code (int n, int m);
-    vector<int> CODE;
-    void initializeCode();
-    void promptGuess();
-    void print();
-};
 
 //constructor for code class.
 code::code (int n, int m)
@@ -62,30 +49,34 @@ int code::checkIncorrect (code &guess)
     for (int i = 0; i < count; i++)
     {
         if (guess.CODE[i] == temp[i]) {
-            guess.CODE.erase(guess.CODE.begin() + i);
-            temp.erase(temp.begin() + i);
+            guess.CODE.erase(guess.CODE.begin() + i);       // seems unnecessry to reference the beginning since vectors are indexed at 0 being the start...
+            temp.erase(temp.begin() + i);                   // same as above
             i--;
             count--;
         }
     }
+    /*
     for (int i = 0; i<count; i++)
         cout << temp[i] << " ";
     for (int i = 0; i<count; i++)
         cout << guess.CODE[i] << " ";
+    */
     for (int i = 0; i < count; i++)
     {
-        for(int j = 0; j < count; i++)
+        for(int j = 0; j < count; j++)
         {
             if (guess.CODE[i] == temp[j])
             {
-                guess.CODE.erase(guess.CODE.begin() + i);
-                temp.erase(temp.begin() + j);
-                count--;
+                //guess.CODE.erase(guess.CODE.begin() + i);
+                //temp.erase(temp.begin() + j);
+                //count--;
+                temp[j] = RANGE + 2;
                 numIncorrect++;
+                break;
             }
         }
     }
-    return 9;
+    return numIncorrect;
 }
 
 //prompts user to enter a guess of the code.
