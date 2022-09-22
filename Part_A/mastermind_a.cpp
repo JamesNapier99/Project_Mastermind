@@ -1,7 +1,17 @@
-////////////////////////////////////////////////////////////////
-// Project Mastermind: Part A
-// Written by James Napier, Julia Rasmussen, and Samuel Sheehan
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// Project#1 
+// Mastermind: Part A
+// Written by:
+// James Napier:                                      napier.j@northeastern.edu
+// Julia Rasmussen:                                rasmussen.j@northeastern.edu
+// Samuel Sheehan:                                   sheehan.s@northeastern.edu
+//
+// Main program file for projet 1. Contains declaration for the 
+// code constructor, initializeCode, checkCorrect, checkIncorrect, promptGuess,
+// and print
+//
+///////////////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
@@ -10,8 +20,8 @@
 using namespace std;
 using namespace n;
 
-//constructor for code class.
 code::code (int n, int m)
+// constructor for code class
 {
     LENGTH = n;
     RANGE = m;
@@ -19,8 +29,10 @@ code::code (int n, int m)
     COUNT = 0;
 }
 
-//initializes the random code to guess.
+
 void code::initializeCode()
+// initializes CODE, a random vector of size SIZE containing
+// integers between 0 and RANGE-1 for a code object
 {
    for (int i = 0; i < LENGTH; i++)
    {
@@ -28,8 +40,9 @@ void code::initializeCode()
    }
 }
 
-//returns the number of digits in the correct position
 int code::checkCorrect (code &guess)
+// Compares index i of the given code object's CODE field with 
+// index i of this code object's CODE field for 0<=i<LENGTH
 {
     int numCorrect = 0;
     for (int i = 0; i < LENGTH; i++)
@@ -51,27 +64,19 @@ int code::checkIncorrect (code &guess)
     for (int i = 0; i < count; i++)
     {
         if (guess.CODE[i] == temp[i]) {
-            guess.CODE.erase(guess.CODE.begin() + i);       // seems unnecessry to reference the beginning since vectors are indexed at 0 being the start...
-            temp.erase(temp.begin() + i);                   // same as above
+            guess.CODE.erase(guess.CODE.begin() + i);
+            temp.erase(temp.begin() + i);
             i--;
             count--;
         }
     }
-    /*
-    for (int i = 0; i<count; i++)
-        cout << temp[i] << " ";
-    for (int i = 0; i<count; i++)
-        cout << guess.CODE[i] << " ";
-    */
+
     for (int i = 0; i < count; i++)
     {
         for(int j = 0; j < count; j++)
         {
             if (guess.CODE[i] == temp[j])
             {
-                //guess.CODE.erase(guess.CODE.begin() + i);
-                //temp.erase(temp.begin() + j);
-                //count--;
                 temp[j] = RANGE + 2;
                 numIncorrect++;
                 break;
@@ -94,7 +99,7 @@ void code::promptGuess()
         {
             int temp;
             //prompt user for value at index i of guess.
-            cout << "\nPlease enter index "<< i <<" of guess #" << COUNT << ": ";
+            cout << "\nPlease enter index "<< i + 1 <<" of guess #" << COUNT << ": ";
             cin >> temp;
 
             //push int to the back of guess vector.
@@ -112,7 +117,7 @@ void code::promptGuess()
         }
     }
     //the lose condition.
-    cout << "\nYou Lose!";
+    cout << "\nYou Lose!\n";
 }
 
 //prints the code.
