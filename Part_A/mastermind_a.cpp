@@ -40,7 +40,7 @@ void code::initializeCode()
     } //end for
 }
 
-int code::checkCorrect (const code &guess)
+int code::checkCorrect (code &guess)
 // Compares index i of the inputted code guess object's CODE field with
 // index i of this code object's CODE field for 0<=i<LENGTH and returns
 // the number of equivalent values.
@@ -106,7 +106,7 @@ void code::print()
     } //end for
 }
 
-void code::writeVec(const vector<int> &guess)
+void code::writeVec(vector<int> &guess)
 // Writes a vector to the CODE vector field of a code object.
 {
     for (int i = 0; i < LENGTH; i++)
@@ -131,14 +131,14 @@ int main()
     guess1.writeVec(g1);
     guess2.writeVec(g2);
     guess3.writeVec(g3);
-    cout << "For sample guess 1, there are " << master.checkCorrect(guess1)
-        << " correctly placed digits and " << master.checkIncorrect(guess1)
+    cout << "For sample guess 1, there are " << master.checkCorrect(&guess1)
+        << " correctly placed digits and " << master.checkIncorrect(&guess1)
         << " incorrectly placed digits.\n";
-    cout << "For sample guess 2, there are " << master.checkCorrect(guess2)
-         << " correctly placed digits and " << master.checkIncorrect(guess2)
+    cout << "For sample guess 2, there are " << master.checkCorrect(&guess2)
+         << " correctly placed digits and " << master.checkIncorrect(&guess2)
          << " incorrectly placed digits.\n";
-    cout << "For sample guess 3, there are " << master.checkCorrect(guess3)
-         << " correctly placed digits and " << master.checkIncorrect(guess3)
+    cout << "For sample guess 3, there are " << master.checkCorrect(&guess3)
+         << " correctly placed digits and " << master.checkIncorrect(&guess3)
          << " incorrectly placed digits.\n";
     cout << "\nThe correct code was: ";
     master.print();

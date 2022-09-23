@@ -8,15 +8,16 @@ namespace n
     class code
     {
     private:
-        int checkIncorrect(code& guess);
-        int checkCorrect(code& guess);
         int RANGE, LENGTH, COUNT;
-    public:
-        code(int n, int m);
         std::vector<int> CODE;
+    public:
+        code(const int& n, const int& m);
         void initializeCode();
         void promptGuess();
         void print();
+        void writeVec(std::vector<int> &guess);
+        int checkIncorrect(code &guess);
+        int checkCorrect(code &guess);
     };
 }
 #endif
