@@ -3,6 +3,8 @@
 #define RESPONSE_H
 
 #include <vector>
+#include <iostream>
+
 namespace n {
     class response
     {
@@ -13,10 +15,10 @@ namespace n {
             response(int c, int i);
             void setCorrect(int correct);
             void setIncorrect(int incorrect);
-            int getCorrect();
-            int getIncorrect();
-            bool operator == (const response rhs);
-            void operator << ();
+            int getCorrect() const;
+            int getIncorrect() const;
+            friend bool operator== (const response& lhs, const response& rhs);
+            friend std::ostream& operator<< (std::ostream& ostr, const response& r);
     };
 }
 #endif
