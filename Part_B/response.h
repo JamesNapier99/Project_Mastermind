@@ -20,5 +20,9 @@ namespace n {
             friend bool operator== (const response& lhs, const response& rhs);
             friend std::ostream& operator<< (std::ostream& ostr, const response& r);
     };
+
+    bool operator==(const response& lhs, const response& rhs);
+
+    
 }
 #endif

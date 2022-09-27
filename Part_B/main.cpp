@@ -6,6 +6,8 @@
 #include <vector>
 #include <stdlib.h>
 #include "code.h"
+#include "response.h"
+#include "mastermind.h"
 
 using namespace std;
 using namespace n;
@@ -162,26 +164,121 @@ void response::setIncorrect(int incorrect)
 }
 
 //getter for numCorrect.
-int response::getCorrect()
+int response::getCorrect() const
 {
     return numCorrect;
 }
 
 //getter for numIncorrect.
-int response::getCorrect()
+int response::getCorrect() const
 {
     return numCorrect;
 }
 
 //override the == function.
-bool operator == (const response rhs)
+bool operator == (const response& lhs, const response& rhs)
 {
-    return ((numCorrect == rhs.getCorrect()) && (numIncorrect == rhs.getIncorrect()));
+    return ((lhs.getCorrect() == rhs.getCorrect()) && (lhs.getIncorrect() == rhs.getIncorrect()));
 }
 
-void operator << ()
+ostream& operator << (ostream& ostr, const response& r)
 {
-    cout << numCorrect << ", " << numIncorrect;
+    ostr << r.getCorrect() << ", " << r.getIncorrect();
+    return ostr;
+}
+
+mastermind::mastermind() : secretCode(5, 10)
+{
+    secretCode.initializeCode();
+}
+
+mastermind::mastermind(const int& nGiven, const int& mGiven) : 
+    secretCode(nGiven, mGiven)
+{
+    secretCode.initializeCode();
+}
+
+void mastermind::printSecretCode()
+{
+    secretCode.print();
+}
+
+code mastermind::humanGuess()
+{
+    code guess(n, m);
+    //fills in guess with a total of LENGTH integers.
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        bool valid = false;
+        while(~valid)
+        {
+            //prompt user for value at index i of guess.
+            cout << "\nPlease enter index " << i << " of your guess: ";
+            cin >> temp;
+            if (temp < m && temp >= 0)
+            {
+                valid = true;
+            } else
+            {
+                cout << "\nValue is out of range. Please try again";
+            }
+        }
+        //push int to the back of guess vector.
+        guess.CODE[i] = temp;
+    }
+
+    return guess;
+}
+
+response mastermind::getResponse(code& guess)
+{
+    int correct;
+    int incorrect;
+
+    correct = secretCode.checkCorrect(guess);
+    incorrect = secretCode.checkIncorrect(guess);
+
+    response resp(correct,incorrect);
+
+    return resp;
+}
+
+bool mastermind::isSolved(response& r)
+{
+    response key(5,0);
+    return key == r;
+}
+
+void mastermind::playGame()
+{
+    secretCode.initializeCode();
+    // fluff about code I guess
+    secretCode.print();
+    bool win;
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "\nGuess Number" << i+1;
+        code guess = humanGuess();
+        response r = getResponse(guess);
+        win = isSolved(r);
+        if (win)
+        {
+            cout << "\nYou guessed the secret number! Congrats!";
+            cout << "\n================================================================================";
+            break;
+        } else
+        {
+            cout << "\nYour guess was not correct. You have " << 9 - i << " guesses left!";
+            cout << "\n================================================================================";
+        }
+    }
+    if (!win)
+    {
+        cout << "\nSorry, you ran out of guesses. Try again next time!";
+        cout << "\n================================================================================";
+    }
+    
 }
 //********************************************************************************************
 //End of code for Part B.

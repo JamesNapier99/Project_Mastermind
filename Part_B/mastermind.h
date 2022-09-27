@@ -18,7 +18,7 @@ namespace n
             mastermind(const int& nGiven, const int& mGiven) : secretCode(nGiven, mGiven) {};
             void printSecretCode();
             code humanGuess();
-            response getResponse();
+            response getResponse(code& guess);
             bool isSolved(response& r);
             void playGame();
     };

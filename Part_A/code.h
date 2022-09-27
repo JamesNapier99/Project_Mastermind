@@ -14,7 +14,7 @@ namespace n
         code(const int &n, const int &m);
 
         void initializeCode();
-        void promptGuess();
+        //void promptGuess();
         void print();
         void writeVec(const std::vector<int> &guess);
         int checkIncorrect(code &guess);
