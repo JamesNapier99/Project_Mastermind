@@ -14,8 +14,8 @@ namespace n
             int n;
             int m;
         public:
-            mastermind() : secretCode(5, 10) {};
-            mastermind(const int& nGiven, const int& mGiven) : secretCode(nGiven, mGiven) {};
+            mastermind();
+            mastermind(const int& nGiven, const int& mGiven);
             void printSecretCode();
             code humanGuess();
             response getResponse(code& guess);

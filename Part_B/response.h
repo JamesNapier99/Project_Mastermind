@@ -17,11 +17,11 @@ namespace n {
             void setIncorrect(int incorrect);
             int getCorrect() const;
             int getIncorrect() const;
-            friend bool operator== (const response& lhs, const response& rhs);
-            friend std::ostream& operator<< (std::ostream& ostr, const response& r);
+//            friend bool operator== (const response& lhs, const response& rhs);
+//            friend std::ostream& operator<< (std::ostream& ostr, const response& r);
     };
 
-    bool operator==(const response& lhs, const response& rhs);
+//    bool operator==(const response& lhs, const response& rhs);
 
     
 }

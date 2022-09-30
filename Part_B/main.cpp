@@ -13,17 +13,23 @@ using namespace std;
 using namespace n;
 
 //constructor for code class.
-code::code(int n, int m)
+code::code(const int &n, const int &m)
 {
     LENGTH = n;
     RANGE = m;
-    CODE.resize(LENGTH);
     COUNT = 0;
+}
+
+//get function for Obj code
+std::vector<int> code::getCode()
+{
+    return CODE;
 }
 
 //initializes the random code to guess.
 void code::initializeCode()
 {
+    CODE.resize(LENGTH);
     for (int i = 0; i < LENGTH; i++)
     {
         CODE[i] = rand() % RANGE;
@@ -83,56 +89,6 @@ int code::checkIncorrect(code& guess)
     return numIncorrect;
 }
 
-//prompts user to enter a guess of the code.
-void code::promptGuess()
-{
-    //loops through code at most 10 times.
-    while (COUNT < 10)
-    {
-        COUNT += 1;
-        code guess(LENGTH, RANGE);
-
-        //print code
-        cout << "\nOur super secret code is ";
-        print();
-
-        //fills in guess with a total of LENGTH integers.
-        for (int i = 0; i < LENGTH; i++)
-        {
-            int temp;
-            //prompt user for value at index i of guess.
-            cout << "\nPlease enter index " << i << " of guess #" << COUNT << ": ";
-            cin >> temp;
-
-            //push int to the back of guess vector.
-            guess.CODE[i] = temp;
-        }
-
-        int numCorrect = checkCorrect(guess);
-        int numIncorrect = checkIncorrect(guess);
-
-        cout << "\nNumber of correct digits: " << numCorrect;
-        cout << "\nNumber of digits in wrong place: " << numIncorrect;
-
-        //checks whether or not the given guess is correct. if so, win condition.
-        if (numCorrect == LENGTH)
-        {
-            COUNT = 10;
-            cout << "\nYou guessed the secret number! Congrats!";
-            cout << "\n================================================================================";
-            return;
-        }
-        else
-        {
-            cout << "\nYour guess was not correct. You have " << 10 - COUNT << " guesses left!";
-            cout << "\n================================================================================";
-        }
-    }
-    //the lose condition.
-    cout << "\nSorry, you ran out of guesses. Try again next time!";
-    cout << "\n================================================================================";
-}
-
 //prints the code.
 void code::print()
 {
@@ -170,32 +126,35 @@ int response::getCorrect() const
 }
 
 //getter for numIncorrect.
-int response::getCorrect() const
+int response::getIncorrect() const
 {
-    return numCorrect;
+    return numIncorrect;
 }
 
-//override the == function.
-bool operator == (const response& lhs, const response& rhs)
-{
-    return ((lhs.getCorrect() == rhs.getCorrect()) && (lhs.getIncorrect() == rhs.getIncorrect()));
-}
-
-ostream& operator << (ostream& ostr, const response& r)
-{
-    ostr << r.getCorrect() << ", " << r.getIncorrect();
-    return ostr;
-}
+////override the == function.
+//bool operator == (const response& lhs, const response& rhs)
+//{
+//    return ((lhs.getCorrect() == rhs.getCorrect()) && (lhs.getIncorrect() == rhs.getIncorrect()));
+//}
+//
+//ostream& operator << (ostream& ostr, const response& r)
+//{
+//    ostr << r.getCorrect() << ", " << r.getIncorrect();
+//    return ostr;
+//}
 
 mastermind::mastermind() : secretCode(5, 10)
 {
     secretCode.initializeCode();
+    n = 5;
+    m = 10;
 }
 
-mastermind::mastermind(const int& nGiven, const int& mGiven) : 
-    secretCode(nGiven, mGiven)
+mastermind::mastermind(const int& nGiven, const int& mGiven) : secretCode(nGiven, mGiven)
 {
     secretCode.initializeCode();
+    n = nGiven;
+    m = mGiven;
 }
 
 void mastermind::printSecretCode()
@@ -206,12 +165,12 @@ void mastermind::printSecretCode()
 code mastermind::humanGuess()
 {
     code guess(n, m);
-    //fills in guess with a total of LENGTH integers.
+//    fills in guess with a total of LENGTH integers.
     for (int i = 0; i < n; i++)
     {
         int temp;
         bool valid = false;
-        while(~valid)
+        while(!valid)
         {
             //prompt user for value at index i of guess.
             cout << "\nPlease enter index " << i << " of your guess: ";
@@ -225,10 +184,9 @@ code mastermind::humanGuess()
             }
         }
         //push int to the back of guess vector.
-        guess.CODE[i] = temp;
+        guess.getCode()[i] = temp;
     }
-
-    return guess;
+        return guess;
 }
 
 response mastermind::getResponse(code& guess)
@@ -247,38 +205,36 @@ response mastermind::getResponse(code& guess)
 bool mastermind::isSolved(response& r)
 {
     response key(5,0);
-    return key == r;
+    return ((r.getCorrect() == key.getCorrect()) && (r.getIncorrect() == key.getIncorrect()));
 }
 
 void mastermind::playGame()
 {
     secretCode.initializeCode();
-    // fluff about code I guess
     secretCode.print();
     bool win;
-    for (int i = 0; i < 10; i++)
-    {
-        cout << "\nGuess Number" << i+1;
+    for (int i = 0; i < 10; i++) {
+        cout << "\nGuess Number " << i + 1;
         code guess = humanGuess();
-        response r = getResponse(guess);
-        win = isSolved(r);
-        if (win)
-        {
-            cout << "\nYou guessed the secret number! Congrats!";
-            cout << "\n================================================================================";
-            break;
-        } else
-        {
-            cout << "\nYour guess was not correct. You have " << 9 - i << " guesses left!";
-            cout << "\n================================================================================";
-        }
+//        response r = getResponse(guess);
+//        win = isSolved(r);
+//        if (win)
+//        {
+//            cout << "\nYou guessed the secret number! Congrats!";
+//            cout << "\n================================================================================";
+//            break;
+//        } else
+//        {
+//            cout << "\nYour guess was not correct. You have " << 9 - i << " guesses left!";
+//            cout << "\n================================================================================";
+//        }
+//    }
+//    if (!win)
+//    {
+//        cout << "\nSorry, you ran out of guesses. Try again next time!";
+//        cout << "\n================================================================================";
+//    }
     }
-    if (!win)
-    {
-        cout << "\nSorry, you ran out of guesses. Try again next time!";
-        cout << "\n================================================================================";
-    }
-    
 }
 //********************************************************************************************
 //End of code for Part B.
@@ -293,7 +249,6 @@ int main()
     cout << "Please enter the range of numbers you want to play with: ";
     cin >> ran;
     cout << "================================================================================";
-    code master(len, ran);
-    master.initializeCode();
-    master.promptGuess();
+    mastermind master(len, ran);
+    master.playGame();
 }
