@@ -17,6 +17,7 @@ code::code(const int &n, const int &m)
 {
     LENGTH = n;
     RANGE = m;
+    CODE.resize(LENGTH);
     COUNT = 0;
 }
 
@@ -29,11 +30,16 @@ std::vector<int> code::getCode()
 //initializes the random code to guess.
 void code::initializeCode()
 {
-    CODE.resize(LENGTH);
     for (int i = 0; i < LENGTH; i++)
     {
         CODE[i] = rand() % RANGE;
     }
+}
+
+//sets a specific digit in the code
+void code::setCodeDigit(int digit, int index)
+{
+    CODE[index] = digit;
 }
 
 //returns the number of digits in the correct position
@@ -184,7 +190,8 @@ code mastermind::humanGuess()
             }
         }
         //push int to the back of guess vector.
-        guess.getCode()[i] = temp;
+        guess.setCodeDigit(temp, i);
+
     }
         return guess;
 }
@@ -193,9 +200,10 @@ response mastermind::getResponse(code& guess)
 {
     int correct;
     int incorrect;
-
     correct = secretCode.checkCorrect(guess);
     incorrect = secretCode.checkIncorrect(guess);
+    cout << correct;
+    cout << incorrect;
 
     response resp(correct,incorrect);
 
@@ -216,24 +224,25 @@ void mastermind::playGame()
     for (int i = 0; i < 10; i++) {
         cout << "\nGuess Number " << i + 1;
         code guess = humanGuess();
-//        response r = getResponse(guess);
-//        win = isSolved(r);
-//        if (win)
-//        {
-//            cout << "\nYou guessed the secret number! Congrats!";
-//            cout << "\n================================================================================";
-//            break;
-//        } else
-//        {
-//            cout << "\nYour guess was not correct. You have " << 9 - i << " guesses left!";
-//            cout << "\n================================================================================";
-//        }
-//    }
-//    if (!win)
-//    {
-//        cout << "\nSorry, you ran out of guesses. Try again next time!";
-//        cout << "\n================================================================================";
-//    }
+        response r = getResponse(guess);
+        cout << "Number of correctly placed digits: " << r.getCorrect() << "\n";
+        cout << "Number of incorrectly placed digits: " << r.getIncorrect() << "\n";
+        win = isSolved(r);
+        if (win)
+        {
+            cout << "\nYou guessed the secret number! Congrats!";
+            cout << "\n================================================================================";
+            break;
+        } else
+        {
+            cout << "\nYour guess was not correct. You have " << 9 - i << " guesses left!";
+            cout << "\n================================================================================";
+        }
+    }
+    if (!win)
+    {
+        cout << "\nSorry, you ran out of guesses. Try again next time!";
+        cout << "\n================================================================================";
     }
 }
 //********************************************************************************************

@@ -15,6 +15,7 @@ namespace n
         int checkIncorrect(code& guess);
         int checkCorrect(code& guess);
         std::vector<int>  getCode();
+        void setCodeDigit(int digit, int index);
         void initializeCode();
         void promptGuess();
         void print();
