@@ -178,7 +178,7 @@ int response::getCorrect() const
 }
 
 /*
-* Getter for numInorrect
+* Getter for numIncorrect
 * No inputs.
 */
 int response::getIncorrect() const
@@ -188,7 +188,7 @@ int response::getIncorrect() const
 
 /*
 * Overrides the == function for the response class.
-* rhs: the response on the right hand side of the == operator, the response to compar the original to.
+* rhs: the response on the right hand side of the == operator, the response to compare the original to.
 */
 bool response::operator == (const response& rhs)
 {
@@ -343,7 +343,7 @@ int main()
     cout << "================================================================================";
     cout << "\nPlease enter the length of the guess you want to play with: ";
     cin >> len;
-    cout << "Please enter the range of numbers you want to play with: ";
+    cout << "Please enter the upper limit of the range of numbers you want to play with: ";
     cin >> ran;
     cout << "================================================================================";
     mastermind master(len, ran);
