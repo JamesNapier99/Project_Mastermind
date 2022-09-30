@@ -186,17 +186,24 @@ int response::getIncorrect() const
     return numIncorrect;
 }
 
-////override the == function.
-//bool operator == (const response& lhs, const response& rhs)
-//{
-//    return ((lhs.getCorrect() == rhs.getCorrect()) && (lhs.getIncorrect() == rhs.getIncorrect()));
-//}
-//
-//ostream& operator << (ostream& ostr, const response& r)
-//{
-//    ostr << r.getCorrect() << ", " << r.getIncorrect();
-//    return ostr;
-//}
+/*
+* Overrides the == function for the response class.
+* rhs: the response on the right hand side of the == operator, the response to compar the original to.
+*/
+bool response::operator == (const response& rhs)
+{
+    return ((getCorrect() == rhs.getCorrect()) && (getIncorrect() == rhs.getIncorrect()));
+}
+
+/*
+* Overrides the << function.
+* ostr: the ostream to print to.
+*/
+ostream& response::operator << (ostream& ostr)
+{
+    ostr << getCorrect() << ", " << getIncorrect();
+    return ostr;
+}
 
 /*
 * Intialize mastermind object with a secret code of length 5 and range 10.
