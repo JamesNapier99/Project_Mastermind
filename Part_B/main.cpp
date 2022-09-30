@@ -94,27 +94,19 @@ int code::checkIncorrect(code& guess)
     for (int i = 0; i < count; i++)
     {
         if (guess.CODE[i] == temp[i]) {
-            guess.CODE.erase(guess.CODE.begin() + i);       // seems unnecessry to reference the beginning since vectors are indexed at 0 being the start...
-            temp.erase(temp.begin() + i);                   // same as above
+            guess.CODE.erase(guess.CODE.begin() + i);
+            temp.erase(temp.begin() + i);
             i--;
             count--;
         }
     }
-    /*
-    for (int i = 0; i<count; i++)
-        cout << temp[i] << " ";
-    for (int i = 0; i<count; i++)
-        cout << guess.CODE[i] << " ";
-    */
+
     for (int i = 0; i < count; i++)
     {
         for (int j = 0; j < count; j++)
         {
             if (guess.CODE[i] == temp[j])
             {
-                //guess.CODE.erase(guess.CODE.begin() + i);
-                //temp.erase(temp.begin() + j);
-                //count--;
                 temp[j] = RANGE + 2;
                 numIncorrect++;
                 break;
@@ -187,16 +179,16 @@ int response::getIncorrect() const
 }
 
 ////override the == function.
-//bool operator == (const response& lhs, const response& rhs)
-//{
-//    return ((lhs.getCorrect() == rhs.getCorrect()) && (lhs.getIncorrect() == rhs.getIncorrect()));
-//}
-//
-//ostream& operator << (ostream& ostr, const response& r)
-//{
-//    ostr << r.getCorrect() << ", " << r.getIncorrect();
-//    return ostr;
-//}
+bool operator == (const response& lhs, const response& rhs)
+{
+    return ((lhs.getCorrect() == rhs.getCorrect()) && (lhs.getIncorrect() == rhs.getIncorrect()));
+}
+
+ostream& operator << (ostream& ostr, const response& r)
+{
+    ostr << r.getCorrect() << ", " << r.getIncorrect();
+    return ostr;
+}
 
 /*
 * Intialize mastermind object with a secret code of length 5 and range 10.
@@ -275,7 +267,7 @@ response mastermind::getResponse(code& guess)
     incorrect = secretCode.checkIncorrect(guess);
 
     response resp(correct, incorrect);
-
+    cout << resp;
     return resp;
 }
 
@@ -286,7 +278,7 @@ response mastermind::getResponse(code& guess)
 bool mastermind::isSolved(response& r)
 {
     response key(secretCode.getLength(), 0);
-    return ((r.getCorrect() == key.getCorrect()) && (r.getIncorrect() == key.getIncorrect()));
+    return key == r;
 }
 
 /*
