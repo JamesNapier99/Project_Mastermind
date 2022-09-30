@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////
-// Project Mastermind: Part A
+// Project Mastermind: Part B
 // Written by James Napier, Julia Rasmussen, and Samuel Sheehan
 ////////////////////////////////////////////////////////////////
 #include <iostream>
@@ -13,12 +13,17 @@ using namespace std;
 using namespace n;
 
 //constructor for code class.
-code::code(const int &n, const int &m)
+code::code(const int& n, const int& m)
 {
     LENGTH = n;
     RANGE = m;
     CODE.resize(LENGTH);
     COUNT = 0;
+}
+
+int code::getLength()
+{
+    return LENGTH;
 }
 
 //get function for Obj code
@@ -171,12 +176,12 @@ void mastermind::printSecretCode()
 code mastermind::humanGuess()
 {
     code guess(n, m);
-//    fills in guess with a total of LENGTH integers.
+    //    fills in guess with a total of LENGTH integers.
     for (int i = 0; i < n; i++)
     {
         int temp;
         bool valid = false;
-        while(!valid)
+        while (!valid)
         {
             //prompt user for value at index i of guess.
             cout << "\nPlease enter index " << i << " of your guess: ";
@@ -184,7 +189,8 @@ code mastermind::humanGuess()
             if (temp < m && temp >= 0)
             {
                 valid = true;
-            } else
+            }
+            else
             {
                 cout << "\nValue is out of range. Please try again";
             }
@@ -193,7 +199,7 @@ code mastermind::humanGuess()
         guess.setCodeDigit(temp, i);
 
     }
-        return guess;
+    return guess;
 }
 
 response mastermind::getResponse(code& guess)
@@ -202,24 +208,29 @@ response mastermind::getResponse(code& guess)
     int incorrect;
     correct = secretCode.checkCorrect(guess);
     incorrect = secretCode.checkIncorrect(guess);
-    cout << correct;
-    cout << incorrect;
 
-    response resp(correct,incorrect);
+    response resp(correct, incorrect);
 
     return resp;
 }
 
 bool mastermind::isSolved(response& r)
 {
-    response key(5,0);
+    response key(secretCode.getLength(), 0);
+    cout << "\nkey correct: " << key.getCorrect();
+    cout << "\nr correct: " << r.getCorrect();
+    cout << "\nkey incorrect: " << key.getIncorrect();
+    cout << "\nr incorrect: " << r.getIncorrect();
+
     return ((r.getCorrect() == key.getCorrect()) && (r.getIncorrect() == key.getIncorrect()));
 }
 
 void mastermind::playGame()
 {
     secretCode.initializeCode();
+    cout << "\nShhhhh. Our super secret code is ";
     secretCode.print();
+    cout << ".\n";
     bool win;
     for (int i = 0; i < 10; i++) {
         cout << "\nGuess Number " << i + 1;
@@ -233,7 +244,8 @@ void mastermind::playGame()
             cout << "\nYou guessed the secret number! Congrats!";
             cout << "\n================================================================================";
             break;
-        } else
+        }
+        else
         {
             cout << "\nYour guess was not correct. You have " << 9 - i << " guesses left!";
             cout << "\n================================================================================";

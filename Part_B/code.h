@@ -11,9 +11,10 @@ namespace n
         std::vector<int> CODE;
         int RANGE, LENGTH, COUNT;
     public:
-        code(const int &n, const int &m);
+        code(const int& n, const int& m);
         int checkIncorrect(code& guess);
         int checkCorrect(code& guess);
+        int getLength();
         std::vector<int>  getCode();
         void setCodeDigit(int digit, int index);
         void initializeCode();
@@ -21,4 +22,4 @@ namespace n
         void print();
     };
 }
-#endif
+#endif                                                                                                         

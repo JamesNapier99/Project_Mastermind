@@ -9,18 +9,18 @@ namespace n
 {
     class mastermind
     {
-        private:
-            code secretCode;
-            int n;
-            int m;
-        public:
-            mastermind();
-            mastermind(const int& nGiven, const int& mGiven);
-            void printSecretCode();
-            code humanGuess();
-            response getResponse(code& guess);
-            bool isSolved(response& r);
-            void playGame();
+    private:
+        code secretCode;
+        int n;
+        int m;
+    public:
+        mastermind();
+        mastermind(const int& nGiven, const int& mGiven);
+        void printSecretCode();
+        code humanGuess();
+        response getResponse(code& guess);
+        bool isSolved(response& r);
+        void playGame();
     };
 }
 
