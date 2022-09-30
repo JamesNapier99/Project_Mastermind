@@ -5,10 +5,8 @@
 #include "code.h"
 #include "response.h"
 
-namespace n
+class mastermind
 {
-    class mastermind
-    {
     private:
         code secretCode;
         int n;
@@ -21,7 +19,7 @@ namespace n
         response getResponse(code& guess);
         bool isSolved(response& r);
         void playGame();
-    };
-}
+};
+
 
 #endif

@@ -10,7 +10,6 @@
 #include "mastermind.h"
 
 using namespace std;
-using namespace n;
 
 /*
 * Initializes the code object.
@@ -94,27 +93,18 @@ int code::checkIncorrect(code& guess)
     for (int i = 0; i < count; i++)
     {
         if (guess.CODE[i] == temp[i]) {
-            guess.CODE.erase(guess.CODE.begin() + i);       // seems unnecessry to reference the beginning since vectors are indexed at 0 being the start...
-            temp.erase(temp.begin() + i);                   // same as above
+            guess.CODE.erase(guess.CODE.begin() + i);
+            temp.erase(temp.begin() + i);
             i--;
             count--;
         }
     }
-    /*
-    for (int i = 0; i<count; i++)
-        cout << temp[i] << " ";
-    for (int i = 0; i<count; i++)
-        cout << guess.CODE[i] << " ";
-    */
     for (int i = 0; i < count; i++)
     {
         for (int j = 0; j < count; j++)
         {
             if (guess.CODE[i] == temp[j])
             {
-                //guess.CODE.erase(guess.CODE.begin() + i);
-                //temp.erase(temp.begin() + j);
-                //count--;
                 temp[j] = RANGE + 2;
                 numIncorrect++;
                 break;
@@ -190,18 +180,18 @@ int response::getIncorrect() const
 * Overrides the == function for the response class.
 * rhs: the response on the right hand side of the == operator, the response to compare the original to.
 */
-bool response::operator == (const response& rhs)
+bool operator == (const response& lhs, const response& rhs)
 {
-    return ((getCorrect() == rhs.getCorrect()) && (getIncorrect() == rhs.getIncorrect()));
+    return ((lhs.getCorrect() == rhs.getCorrect()) && (lhs.getIncorrect() == rhs.getIncorrect()));
 }
 
 /*
 * Overrides the << function.
 * ostr: the ostream to print to.
 */
-ostream& response::operator << (ostream& ostr)
+ostream& operator << (ostream& ostr, const response& rhs)
 {
-    ostr << getCorrect() << ", " << getIncorrect();
+    ostr << rhs.getCorrect() << ", " << rhs.getIncorrect();
     return ostr;
 }
 
@@ -271,7 +261,7 @@ code mastermind::humanGuess()
 }
 
 /*
-* Gets the response from a given guess.
+* Gets the response from a given guess and prints it to the terminal.
 * guess: code object to base reponse off of.
 */
 response mastermind::getResponse(code& guess)
@@ -283,17 +273,21 @@ response mastermind::getResponse(code& guess)
 
     response resp(correct, incorrect);
 
+    cout << "\nNumber of correctly and incorrectly placed digits: ";
+    cout << resp;
+    cout << "\n================================================================================";
+
     return resp;
 }
 
 /*
-* Determines whether or not a given response solves the secret code.
+* Determines whether or not a given response solves the secret code using overloaded ==.
 * r: response to check the secret code against.
 */
 bool mastermind::isSolved(response& r)
 {
     response key(secretCode.getLength(), 0);
-    return ((r.getCorrect() == key.getCorrect()) && (r.getIncorrect() == key.getIncorrect()));
+    return key == r;
 }
 
 /*
@@ -311,8 +305,6 @@ void mastermind::playGame()
         cout << "\nGuess Number " << i + 1;
         code guess = humanGuess();
         response r = getResponse(guess);
-        cout << "Number of correctly placed digits: " << r.getCorrect() << "\n";
-        cout << "Number of incorrectly placed digits: " << r.getIncorrect() << "\n";
         win = isSolved(r);
         if (win)
         {

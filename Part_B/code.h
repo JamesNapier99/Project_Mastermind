@@ -3,10 +3,9 @@
 #define CODE_H
 
 #include <vector>
-namespace n
+
+class code
 {
-    class code
-    {
     private:
         std::vector<int> CODE;
         int RANGE, LENGTH, COUNT;
@@ -20,6 +19,6 @@ namespace n
         void initializeCode();
         void promptGuess();
         void print();
-    };
-}
+};
+
 #endif                                                                                                         

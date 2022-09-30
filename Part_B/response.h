@@ -2,12 +2,10 @@
 #ifndef RESPONSE_H
 #define RESPONSE_H
 
-#include <vector>
-#include <iostream>
+#include <ostream>
 
-namespace n {
-    class response
-    {
+class response
+ {
     private:
         int numCorrect;
         int numIncorrect;
@@ -17,12 +15,8 @@ namespace n {
         void setIncorrect(int incorrect);
         int getCorrect() const;
         int getIncorrect() const;
-        bool operator == (const response& rhs);
-        std::ostream& operator << (std::ostream& ostr); //do we need to have this be a friend?
-    };
+        friend bool operator == (const response& lhs, const response& rhs);
+        friend std::ostream& operator << (std::ostream& ostr, const response& rhs);
+};
 
-    //    bool operator==(const response& lhs, const response& rhs);
-
-
-}
 #endif
