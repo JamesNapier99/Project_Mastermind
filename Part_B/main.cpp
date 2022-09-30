@@ -12,7 +12,11 @@
 using namespace std;
 using namespace n;
 
-//constructor for code class.
+/*
+* Initializes the code object.
+* n: integer n, representing the length of the new code object.
+* m: integer m, representing the range of the new code object.
+*/
 code::code(const int& n, const int& m)
 {
     LENGTH = n;
@@ -21,18 +25,28 @@ code::code(const int& n, const int& m)
     COUNT = 0;
 }
 
+/*
+* Gets the value of length from a given code object.
+* No inputs.
+*/
 int code::getLength()
 {
     return LENGTH;
 }
 
-//get function for Obj code
+/*
+* Gets the code stored in a given code object.
+* No inputs.
+*/
 std::vector<int> code::getCode()
 {
     return CODE;
 }
 
-//initializes the random code to guess.
+/*
+* Initializes the random code to guess.
+* No inputs.
+*/
 void code::initializeCode()
 {
     for (int i = 0; i < LENGTH; i++)
@@ -41,13 +55,20 @@ void code::initializeCode()
     }
 }
 
-//sets a specific digit in the code
+/*
+* Sets a specific digit in the code.
+* digit: new integer value of the digit.
+* index: integer index of the digit to change.
+*/
 void code::setCodeDigit(int digit, int index)
 {
     CODE[index] = digit;
 }
 
-//returns the number of digits in the correct position
+/*
+* Returns the number of digits in the correct position.
+* guess: code object to compare against the original code object.
+*/
 int code::checkCorrect(code& guess)
 {
     int numCorrect = 0;
@@ -61,7 +82,10 @@ int code::checkCorrect(code& guess)
     return numCorrect;
 }
 
-//returns the # of digits in the incorrect position
+/*
+* Returns the number of digits in the incorrect position.
+* guess: code object to compare against the original code object.
+*/
 int code::checkIncorrect(code& guess)
 {
     int numIncorrect = 0;
@@ -100,7 +124,10 @@ int code::checkIncorrect(code& guess)
     return numIncorrect;
 }
 
-//prints the code.
+/*
+* Prints the stored code.
+* No inputs.
+*/
 void code::print()
 {
     for (int i = 0; i < LENGTH; i++)
@@ -109,34 +136,51 @@ void code::print()
     }
 }
 
-//********************************************************************************************
-//Here's some code for part B.
-//********************************************************************************************
+
+/*
+* Initializes the response class.
+* c: integer to initialize numCorrect to.
+* i: integer to initialize numIncorrect to.
+*/
 response::response(int c, int i)
 {
     numCorrect = c;
     numIncorrect = i;
 }
 
-//setter for numCorrect.
+
+/*
+* Setter for numCorrect
+* correct: integer number of correct digits, to assign to numCorrect.
+*/
 void response::setCorrect(int correct)
 {
     numCorrect = correct;
 }
 
-//setter for numIncorrect.
+/*
+* Setter for numIncorrect
+* correct: integer number of incorrect digits, to assign to numIncorrect.
+*/
 void response::setIncorrect(int incorrect)
 {
     numIncorrect = incorrect;
 }
 
+/*
+* Getter for numCorrect
+* No inputs.
+*/
 //getter for numCorrect.
 int response::getCorrect() const
 {
     return numCorrect;
 }
 
-//getter for numIncorrect.
+/*
+* Getter for numInorrect
+* No inputs.
+*/
 int response::getIncorrect() const
 {
     return numIncorrect;
@@ -154,6 +198,10 @@ int response::getIncorrect() const
 //    return ostr;
 //}
 
+/*
+* Intialize mastermind object with a secret code of length 5 and range 10.
+* No inputs.
+*/
 mastermind::mastermind() : secretCode(5, 10)
 {
     secretCode.initializeCode();
@@ -161,6 +209,11 @@ mastermind::mastermind() : secretCode(5, 10)
     m = 10;
 }
 
+/*
+* Intialize mastermind object with a secret code of length nGiven and range mGiven.
+* nGiven: integer length of the initialized secret code.
+* nGiven: integer range of the initialized secret code.
+*/
 mastermind::mastermind(const int& nGiven, const int& mGiven) : secretCode(nGiven, mGiven)
 {
     secretCode.initializeCode();
@@ -168,11 +221,19 @@ mastermind::mastermind(const int& nGiven, const int& mGiven) : secretCode(nGiven
     m = mGiven;
 }
 
+/*
+* Print the secret code from the mastermind object.
+* No inputs.
+*/
 void mastermind::printSecretCode()
 {
     secretCode.print();
 }
 
+/*
+* Asks user for guess.
+* No inputs.
+*/
 code mastermind::humanGuess()
 {
     code guess(n, m);
@@ -202,6 +263,10 @@ code mastermind::humanGuess()
     return guess;
 }
 
+/*
+* Gets the response from a given guess.
+* guess: code object to base reponse off of.
+*/
 response mastermind::getResponse(code& guess)
 {
     int correct;
@@ -214,17 +279,20 @@ response mastermind::getResponse(code& guess)
     return resp;
 }
 
+/*
+* Determines whether or not a given response solves the secret code.
+* r: response to check the secret code against.
+*/
 bool mastermind::isSolved(response& r)
 {
     response key(secretCode.getLength(), 0);
-    cout << "\nkey correct: " << key.getCorrect();
-    cout << "\nr correct: " << r.getCorrect();
-    cout << "\nkey incorrect: " << key.getIncorrect();
-    cout << "\nr incorrect: " << r.getIncorrect();
-
     return ((r.getCorrect() == key.getCorrect()) && (r.getIncorrect() == key.getIncorrect()));
 }
 
+/*
+* Play the Mastermind game.
+* No inputs.
+*/
 void mastermind::playGame()
 {
     secretCode.initializeCode();
@@ -257,10 +325,11 @@ void mastermind::playGame()
         cout << "\n================================================================================";
     }
 }
-//********************************************************************************************
-//End of code for Part B.
-//********************************************************************************************
-//the main function of the program.
+
+/*
+* The main function, runs the whole code.
+* No inputs.
+*/
 int main()
 {
     int len, ran;
