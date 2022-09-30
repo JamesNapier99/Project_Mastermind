@@ -177,8 +177,9 @@ int response::getIncorrect() const
 }
 
 /*
-* Overrides the == function for the response class.
-* rhs: the response on the right hand side of the == operator, the response to compare the original to.
+* Overrides the == function for comparing two responses.
+* lhs: the response on the left hand side of the == operator, the first response to compare.
+* rhs: the response on the right hand side of the == operator, the second response to compare.
 */
 bool operator == (const response& lhs, const response& rhs)
 {
@@ -186,8 +187,9 @@ bool operator == (const response& lhs, const response& rhs)
 }
 
 /*
-* Overrides the << function.
+* Overrides the << function for a response.
 * ostr: the ostream to print to.
+* rhs: the response to print out.
 */
 ostream& operator << (ostream& ostr, const response& rhs)
 {
